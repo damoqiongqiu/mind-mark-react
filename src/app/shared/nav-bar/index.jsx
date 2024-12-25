@@ -101,7 +101,7 @@ const NavBar = props => {
                 })
               }
             </NavDropdown>
-            <Nav.Link href="https://gitee.com/mumu-osc/MindMark-React" target="_blank">
+            <Nav.Link href="https://gitee.com/mumu-osc/mind-mark-react" target="_blank">
               <i className="fa fa-github"></i>
             </Nav.Link>
           </Nav>

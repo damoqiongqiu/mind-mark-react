@@ -9,10 +9,10 @@ export default props => {
         <div className="row">
           <div className="col-md-12 d-flex align-items-center gap-3 text-start">
             <p className="mb-0">
-              Powered by <a href="https://gitee.com/mumu-osc/MindMark-React" target="_blank" rel="noopener noreferrer">MindMark-React</a>
+              Powered by <a href="https://gitee.com/mumu-osc/mind-mark-react" target="_blank" rel="noopener noreferrer">MindMark-React</a>
             </p>
-            <a href='https://gitee.com/mumu-osc/MindMark-React'>
-              <img src='https://gitee.com/mumu-osc/MindMark-React/badge/star.svg?theme=dark' alt='star'></img>
+            <a href='https://gitee.com/mumu-osc/mind-mark-react'>
+              <img src='https://gitee.com/mumu-osc/mind-mark-react/badge/star.svg?theme=dark' alt='star'></img>
             </a>
           </div>
         </div>
