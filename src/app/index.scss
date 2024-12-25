@@ -1,0 +1,31 @@
+//品牌主色调
+$brandColor: #f6214b;
+//文字颜色
+$textColor: #fff;
+
+/* 一些自定义的全局样式 */
+* {
+  font-family: '微软雅黑', 'Microsoft YaHei', '宋体', Tahoma, Helvetica, Arial, sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: '微软雅黑', 'Microsoft YaHei', '宋体', Tahoma, Helvetica, Arial, sans-serif;
+
+  ::selection {
+    background-color: $brandColor;
+  }
+}
+
+.main-container {
+  height: 100vh;
+  padding-top: 75px;
+  padding-bottom: 75px;
+  overflow: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: $textColor;
+}

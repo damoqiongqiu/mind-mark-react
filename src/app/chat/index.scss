@@ -1,0 +1,121 @@
+.chat-box {
+  background-color: #37383b;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+
+  .content-area {
+    flex-grow: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.4);
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+
+    table {
+      border-collapse: collapse;
+      border: 1px solid #444;
+      background-color: #2b2b2b;
+      color: #f5f5f5;
+      margin: 1rem 0;
+    }
+
+    th,
+    td {
+      border: 1px solid #444;
+      padding: 8px;
+      text-align: left;
+      color: #e0e0e0;
+    }
+
+    th {
+      background-color: #444;
+      color: #ffffff;
+    }
+
+    tr:nth-child(even) {
+      background-color: #3a3a3a;
+    }
+
+    tr:nth-child(odd) {
+      background-color: #2b2b2b;
+    }
+  }
+
+  .input-area {
+    form {
+      background-color: #2b2b2b;
+
+      textarea.form-control {
+        max-height: 300px;
+        border: 1px solid transparent !important;
+        border-radius: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
+        outline: none !important;
+        box-shadow: none !important;
+        background-color: #2b2b2b;
+
+        &::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: rgba(255, 255, 255, 0.4);
+          border-radius: 4px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background-color: transparent;
+        }
+
+        &:focus {
+          outline: none !important;
+          border: 1px solid transparent !important;
+          box-shadow: none !important;
+        }
+      }
+
+      label {
+        border-radius: 0 !important;
+        margin-bottom: 0;
+        transition: all 0.2s ease;
+      }
+
+      button {
+        border-radius: 0 !important;
+        margin-bottom: 0;
+        transition: all 0.2s ease;
+      }
+
+      button:hover {
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+      }
+
+      .btn span {
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .btn:hover span {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
+}

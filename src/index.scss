@@ -1,0 +1,32 @@
+//bootstrap5 基础样式 https://getbootstrap.com/docs/5.3
+@import '~bootstrap/scss/bootstrap';
+
+//PrimeReact 官方样式（此样式只包含 primereact 组件自身的样式，不包含 bootstrap 基础样式） https://primereact.org
+@import "~primereact/resources/primereact.css";
+@import "~primereact/resources/themes/bootstrap4-dark-purple/theme.css";
+
+//font-awesome 图标库 https://fontawesome.com
+@import "~font-awesome/css/font-awesome.min.css";
+
+//PrimeReact 提供的图标库 https://primereact.org
+@import "~primeicons/primeicons.css";
+
+#root {
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+}

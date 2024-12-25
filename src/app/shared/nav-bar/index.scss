@@ -1,0 +1,11 @@
+//导航条背景色
+$navbarBgColor: #000;
+//导航条悬停背景色
+$navbarBgHoverColor: #303d47;
+//文字颜色
+$textColor: #fff;
+
+.main-nav {
+  background-color: $navbarBgColor !important;
+  padding: 0;
+}
