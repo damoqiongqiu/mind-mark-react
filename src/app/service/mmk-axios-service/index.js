@@ -13,8 +13,6 @@ const axiosService = axios.create({
 
 axiosService.interceptors.request.use(
   (request) => {
-    window.showGlobalSpin();
-
     //Mock 状态下，所有的请求都改成 get 请求。
     if (environment.isMock) {
       mmkToast({
@@ -38,11 +36,9 @@ axiosService.interceptors.request.use(
 
 axiosService.interceptors.response.use(
   (response) => {
-    window.hideGlobalSpin();
     return response;
   },
   (error) => {
-    window.hideGlobalSpin();
     console.log(error);
     let errorMsg = i18n.t(`http.${error?.response?.status}`) || `Error Code: ${error.response.status},  Message: ${error.message}`;
     //TODO:发现 session 超时前端做退出动作，删掉浏览器缓存，跳转到首页。

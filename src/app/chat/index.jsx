@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Tag } from 'primereact/tag';
+import LoadingDot from "../shared/loading-dot";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
@@ -31,6 +32,8 @@ export default function MarkdownRenderer() {
 
   //表单校验状态
   const [errors, setErrors] = useState({});
+
+  const [isLoading, setIsLoading] = useState(false);
 
   //内容 markdown
   const [markdownContent, setMarkdownContent] = useState('');
@@ -67,11 +70,10 @@ export default function MarkdownRenderer() {
     setFormData(temp);
   }
 
-  const controller = new AbortController();
-  const { signal } = controller;
   const onSubmit = (e) => {
     e.preventDefault();
 
+    setIsLoading(true);
     const isValid = ajvValidate(formData);
     setErrors({});
 
@@ -93,6 +95,7 @@ export default function MarkdownRenderer() {
         summary: 'Error',
         detail: fieldErrors.msg,
       });
+      setIsLoading(false);
       return;
     }
 
@@ -105,26 +108,33 @@ export default function MarkdownRenderer() {
     } else {
       requestChatData();
     }
-
-    setTimeout(() => {
-      setFormData({ ...formData, ...{ msg: "" } });
-    }, 1000);
   }
 
   const requestChatData = () => {
-    chatService.chat(formData.msg).then(response => {
-      let data = response.data;
-      console.log(data);
-      setMarkdownContent(data);
-    });
+    chatService
+      .chat(formData.msg)
+      .then(response => {
+        let data = response.data;
+        console.log(data);
+        setMarkdownContent(data);
+      }).finally(() => {
+        setFormData({ ...formData, ...{ msg: "" } });
+        setIsLoading(false);
+      });
   }
 
   const requestEmbeddingData = () => {
-    chatService.embedding(formData.msg).then(response => {
-      let data = response.data;
-      console.log(data);
-      setMarkdownContent(data);
-    });
+    chatService
+      .embedding(formData.msg)
+      .then(response => {
+        let data = response.data;
+        console.log(data);
+        setMarkdownContent(data);
+      })
+      .finally(() => {
+        setFormData({ ...formData, ...{ msg: "" } });
+        setIsLoading(false);
+      });
   }
 
   /**
@@ -183,6 +193,8 @@ export default function MarkdownRenderer() {
       return;
     }
 
+    showGlobalSpin();
+
     fileUploadService.uploadFiles([selectedFile]).then(
       response => {
         mmkToast({
@@ -205,27 +217,33 @@ export default function MarkdownRenderer() {
       }
     ).finally(() => {
       console.log("---");
+      hideGlobalSpin();
     });
   };
 
   return (
     <div className="chat-box h-100 d-flex flex-column">
       <div className="content-area flex-grow-1">
-        {
+        {isLoading ?
+          (<LoadingDot />)
+          :
           markdownContent ?
-            <div className="bootstrap-markdown">
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeHighlight]}
-              >
-                {markdownContent}
-              </ReactMarkdown>
-            </div>
+            (
+              <div className="bootstrap-markdown">
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeHighlight]}
+                >
+                  {markdownContent}
+                </ReactMarkdown>
+              </div>
+            )
             :
-            <div className="d-flex justify-content-center align-items-center h-100">
-              <p className="fw-bold fs-4 text-center">{welcomeMsg}</p>
-            </div>
-        }
+            (
+              <div className="d-flex justify-content-center align-items-center h-100">
+                <p className="fw-bold fs-4 text-center">{welcomeMsg}</p>
+              </div>
+            )}
       </div>
       <div className="input-area mt-2">
         <form onSubmit={onSubmit}>
@@ -287,9 +305,19 @@ export default function MarkdownRenderer() {
               data-bs-toggle="tooltip"
               data-bs-placement="top"
               title={i18n.t("send")}
+              onClick={onSubmit}
+              disabled={isLoading}
             >
-              <i className="fa fa-paper-plane"></i>
-              <span className="d-none text-hover">{i18n.t("send")}</span>
+              {isLoading ? (
+                <>
+                  <i className="fa fa-spinner fa-spin"></i>
+                </>
+              ) : (
+                <>
+                  <i className="fa fa-paper-plane"></i>
+                  <span className="d-none text-hover">{i18n.t("send")}</span>
+                </>
+              )}
             </button>
           </div>
         </form>
