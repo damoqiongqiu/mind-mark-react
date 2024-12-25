@@ -213,12 +213,14 @@ export default function MarkdownRenderer() {
       <div className="content-area flex-grow-1">
         {
           markdownContent ?
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              rehypePlugins={[rehypeHighlight]}
-            >
-              {markdownContent}
-            </ReactMarkdown>
+            <div className="bootstrap-markdown">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeHighlight]}
+              >
+                {markdownContent}
+              </ReactMarkdown>
+            </div>
             :
             <div className="d-flex justify-content-center align-items-center h-100">
               <p className="fw-bold fs-4 text-center">{welcomeMsg}</p>

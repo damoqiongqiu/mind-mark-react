@@ -62,7 +62,7 @@ const NavBar = props => {
     <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary main-nav" fixed="top">
       <Container fluid="md">
         <Navbar.Brand href="/home">
-          <Tag severity="danger" value="M" style={{ backgroundColor: "#f6214b", color: "#fff" }}></Tag>
+          <Tag severity="danger" value="M" className='brand-logo'></Tag>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse>
