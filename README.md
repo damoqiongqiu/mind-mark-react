@@ -13,7 +13,7 @@
 修改 webpack.dev.js 中的配置，把 proxy 指向 MindMark 后台服务。
 
 ```javascript
-  proxy: {
+    proxy: {
       "/mind-mark": {
         "target": "http://localhost:9090", //修改这里，指向你的 MindMark 服务端接口
         "secure": false,
@@ -27,6 +27,8 @@
 
 ```shell
 
+npm install
+
 npm run start:dev-backend
 
 ```
@@ -35,7 +37,9 @@ npm run start:dev-backend
 
 ## 3.屏幕截图
 
-<img src="./src/assets/images/mind-mark-react.png"/>
+![MindMark React Interface](./src/assets/images/mmk-1.png)
+
+![MindMark-React Screenshot](./src/assets/images/mind-mark-react.png)
 
 ## 4.License
 

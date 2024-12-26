@@ -8,6 +8,6 @@
 export const dataURL = {
   chatURL: "/mind-mark/chat?msg=<%= msg %>",                     //直接对话，不预先查询向量数据库
   chatStreamURL: "/mind-mark/chatStream?msg=<%= msg %>",         //流式对话，直接对话，不预先查询向量数据库
-  embeddingURL: "/mind-mark/embedding?msg=<%= msg %>",           //首先查询向量库，然后根据向量库返回的上下文生成答案
+  embeddingURL: "/mind-mark/embedding",                          //首先查询向量库，然后根据向量库返回的上下文生成答案
   fileUploadURL: "/mind-mark/file/upload",
 };

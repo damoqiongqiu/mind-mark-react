@@ -125,7 +125,8 @@ export default function MarkdownRenderer() {
 
   const requestEmbeddingData = () => {
     chatService
-      .embedding(formData.msg)
+      // .embedding({ msg: formData.msg, fileIds: ["23"] })  //TODO:让用户在页面上选择文件，把文件的 ID 传递给服务端。
+      .embedding({ msg: formData.msg })
       .then(response => {
         let data = response.data;
         console.log(data);

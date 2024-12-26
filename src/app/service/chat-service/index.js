@@ -10,8 +10,7 @@ export default {
     let reqURL = _.template(chatURL)({ msg });
     return axiosService.get(reqURL);
   },
-  embedding: async (msg) => {
-    let reqURL = _.template(embeddingURL)({ msg });
-    return axiosService.get(reqURL);
+  embedding: async (param) => {
+    return axiosService.post(embeddingURL, param);
   }
 }
