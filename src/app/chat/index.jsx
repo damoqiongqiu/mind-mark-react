@@ -6,8 +6,10 @@ import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import ajv from "../service/ajv-validate-service";
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import * as _ from 'lodash';
-import fileUploadService from 'src/app/service/file-upload-service';
+import { setUploadedFile } from '../shared/store';
+import fileService from 'src/app/service/file-service';
 import chatService from "src/app/service/chat-service";
 
 import "highlight.js/styles/github-dark.css";
@@ -33,16 +35,29 @@ export default function MarkdownRenderer() {
   //表单校验状态
   const [errors, setErrors] = useState({});
 
+  //是否正在加载
   const [isLoading, setIsLoading] = useState(false);
 
   //内容 markdown
   const [markdownContent, setMarkdownContent] = useState('');
-  const contentRef = useRef('');
 
   //欢迎消息
   const [welcomeMsg, setWelcomeMsg] = useState('');
 
-  const [currentFile, setCurrentFile] = useState(null);
+  //当前选中的文件
+  const selectedFiles = useSelector((state) => state.selectedFiles.value);
+
+  //Redux hooks
+  const dispatch = useDispatch();
+  const handleFileUploadSuccess = (selectedFile) => {
+    const fileData = {
+      name: selectedFile.name,
+      size: selectedFile.size,
+      type: selectedFile.type,
+      lastModified: selectedFile.lastModified,
+    };
+    dispatch(setUploadedFile(fileData));
+  };
 
   // 支持的文件格式
   const supportedFormats = [
@@ -103,7 +118,7 @@ export default function MarkdownRenderer() {
     setWelcomeMsg("");
 
     //TODO:接受流式数据
-    if (currentFile) {
+    if (selectedFiles) {
       requestEmbeddingData();
     } else {
       requestChatData();
@@ -125,8 +140,7 @@ export default function MarkdownRenderer() {
 
   const requestEmbeddingData = () => {
     chatService
-      // .embedding({ msg: formData.msg, fileIds: ["23"] })  //TODO:让用户在页面上选择文件，把文件的 ID 传递给服务端。
-      .embedding({ msg: formData.msg })
+      .embedding({ msg: formData.msg, fileIds: selectedFiles.map(file => file.id) })
       .then(response => {
         let data = response.data;
         console.log(data);
@@ -196,7 +210,7 @@ export default function MarkdownRenderer() {
 
     showGlobalSpin();
 
-    fileUploadService.uploadFiles([selectedFile]).then(
+    fileService.uploadFiles([selectedFile]).then(
       response => {
         mmkToast({
           severity: 'success',
@@ -205,8 +219,8 @@ export default function MarkdownRenderer() {
           life: 5000,
           detail: "文件上传成功，服务端正在解析文件内容，速度取决于文件的大小和服务器性能。",
         });
-        setCurrentFile(selectedFile);
         console.log(response);
+        handleFileUploadSuccess(selectedFile);
       },
       error => {
         console.error(error);
@@ -231,10 +245,7 @@ export default function MarkdownRenderer() {
           markdownContent ?
             (
               <div className="bootstrap-markdown">
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  rehypePlugins={[rehypeHighlight]}
-                >
+                <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
                   {markdownContent}
                 </ReactMarkdown>
               </div>
@@ -273,27 +284,12 @@ export default function MarkdownRenderer() {
                 onChange={handleFileUpload}
               />
             </label>
-            {/* <button
-              type="button"
-              className="btn btn-secondary me-2 "
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              title={i18n.t("knowledge")}
-            >
-              <i className="pi pi-book"></i>
-              <span className="d-none text-hover">{i18n.t("knowledge")}</span>
-            </button> */}
             <label className='text-warning'>
               {
-                (currentFile && currentFile.name) ?
+                (selectedFiles.length) ?
                   <Tag severity="warning">
                     <div className="flex align-items-center gap-3">
-                      <span className="text-base">{currentFile.name}</span>
-                      <i
-                        className="pi pi-times text-xs"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => setCurrentFile(null)}>
-                      </i>
+                      <span className="text-base">选中了 {selectedFiles.length} 个文件。</span>
                     </div>
                   </Tag>
                   :

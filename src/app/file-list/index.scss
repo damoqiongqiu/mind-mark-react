@@ -1,0 +1,45 @@
+/**
+  * Custom styles for the file list component
+  */
+.custom-panel {
+  height: 100% !important;
+  display: flex;
+  flex-direction: column;
+
+  .p-toggleable-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    .p-panel-content {
+      padding: 0 !important;
+      border-radius: 0;
+      flex: 1;
+      overflow: hidden;
+
+      .p-multiselect {
+        max-width: 100%;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+
+        .p-multiselect-panel {
+          border-radius: 0;
+
+          .p-multiselect-items-wrapper {
+            max-height: 100% !important;
+            height: 100% !important;
+
+            .p-multiselect-item>span {
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: inline-block;
+              max-width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@
   "home": "首页",
   "chat": "对话",
   "knowledge": "知识库",
-  "knowledgeMsg": "上传一份文件，我可以帮你理解其中的内容。",
+  "knowledgeMsg": "上传一些文件，我可以帮你理解其中的内容。",
   "welcomeMsg": "你可以问我任何问题...",
   "dataSource": "数据源",
   "manage": "管理",

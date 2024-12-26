@@ -51,11 +51,11 @@ const NavBar = props => {
       icon: "fa-home",
       url: "/home"
     },
-    {
-      label: i18n.t("knowledge"),
-      icon: "fa-cog",
-      url: "/knowledge"
-    }
+    // {
+    //   label: i18n.t("knowledge"),
+    //   icon: "fa-cog",
+    //   url: "/knowledge"
+    // }
   ];
 
   return (

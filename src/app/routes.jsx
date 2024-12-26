@@ -1,10 +1,10 @@
-import React, { lazy, useState, useEffect } from "react";
+import React, { lazy, useState } from "react";
 import MainLayout from "./main-layout";
+import Chat from "./chat";
 import Exception404 from "./shared/exception/404";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 
-const Chat = lazy(() => import(/*webpackChunkName:'chat',webpackPrefetch:true*/ "./chat"));
 const Knowledge = lazy(() => import(/*webpackChunkName:'knowledge',webpackPrefetch:true*/ "./knowledge"));
 
 export default props => {
@@ -14,15 +14,15 @@ export default props => {
     {
       path: "/",
       element: Navigate,
-      redirect: "/home",
+      redirect: "/home/chat",
     },
     {
       path: "/home",
       element: MainLayout,
       children: [
         {
-          path: "",
-          element: () => <Navigate to="/chat" replace />,
+          path: "chat",
+          element: Chat,
         },
       ]
     },

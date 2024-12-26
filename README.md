@@ -37,8 +37,6 @@ npm run start:dev-backend
 
 ## 3.屏幕截图
 
-![MindMark React Interface](./src/assets/images/mmk-1.png)
-
 ![MindMark-React Screenshot](./src/assets/images/mind-mark-react.png)
 
 ## 4.License

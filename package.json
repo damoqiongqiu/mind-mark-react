@@ -38,7 +38,7 @@
     "@reduxjs/toolkit": "1.9.5",
     "ajv": "8.12.0",
     "ajv-errors": "3.0.0",
-    "axios": "1.5.0",
+    "axios": "1.6.0",
     "bootstrap": "5.3.1",
     "echarts": "4.2.1",
     "echarts-for-react": "3.0.2",

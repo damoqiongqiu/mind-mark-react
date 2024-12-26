@@ -2,7 +2,7 @@
   "home": "Home",
   "chat": "Chat",
   "knowledge": "Knowledge",
-  "knowledgeMsg": "Upload a file, and I can help you understand its content.",
+  "knowledgeMsg": "Upload some files, and I can help you understand their content.",
   "welcomeMsg": "You can ask me any question...",
   "dataSource": "DataSource",
   "manage": "Manage",

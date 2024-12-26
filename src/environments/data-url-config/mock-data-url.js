@@ -7,4 +7,6 @@ export const dataURL = {
   chatStreamURL: "mock-data/chat-stream.json",    //流式对话，直接对话，不预先查询向量数据库
   embeddingURL: "mock-data/embedding.json",       //首先查询向量库，然后根据向量库返回的上下文生成答案
   fileUploadURL: "",
+  fileListURL: "mock-data/file-list.json",
+  delFileURL: "",
 };
