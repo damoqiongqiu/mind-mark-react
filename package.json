@@ -18,7 +18,7 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "start": "npm run start:dev-mock",
+    "start": "npm run start:dev-backend",
     "start:dev-mock": "cross-env NODE_ENV=development DATA_SOURCE=mock NODE_OPTIONS=--max_old_space_size=4096 webpack serve",
     "start:dev-backend": "cross-env NODE_ENV=development DATA_SOURCE=backend NODE_OPTIONS=--max_old_space_size=4096 webpack serve",
     "start:prod-mock": "cross-env NODE_ENV=production DATA_SOURCE=mock NODE_OPTIONS=--max_old_space_size=4096 webpack serve",

@@ -29,7 +29,7 @@
 
 npm install
 
-npm run start:dev-backend
+npm start
 
 ```
 

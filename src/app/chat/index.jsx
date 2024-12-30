@@ -7,13 +7,16 @@ import rehypeHighlight from "rehype-highlight";
 import ajv from "../service/ajv-validate-service";
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import * as _ from 'lodash';
 import { setUploadedFile } from '../shared/store';
 import fileService from 'src/app/service/file-service';
 import chatService from "src/app/service/chat-service";
+import * as _ from 'lodash';
+import environment from "src/environments/environment";
 
 import "highlight.js/styles/github-dark.css";
 import "./index.scss";
+
+const chatStreamURL = environment.dataURL.chatStreamURL;
 
 const schema = {
   "type": "object",
@@ -116,15 +119,47 @@ export default function MarkdownRenderer() {
 
     console.log(formData);
     setWelcomeMsg("");
+    setMarkdownContent("");
 
     //TODO:接受流式数据
-    if (selectedFiles) {
+    if (selectedFiles && selectedFiles.length) {
       requestEmbeddingData();
     } else {
-      requestChatData();
+      requestChatStream();
     }
   }
 
+  /**
+   * 流式响应
+   */
+  const buffer = [];
+  const bufferTime = setInterval(() => {
+    console.log("buffer", buffer);
+    if (buffer && buffer.length) {
+      let data = buffer.shift();
+      console.log(data);
+      setMarkdownContent(prev => prev + data);
+    }
+  }, 50);
+  useEffect(() => {
+    return () => {
+      clearInterval(bufferTime);
+    };
+  }, []);
+  const requestChatStream = () => {
+    chatService
+      .chatStream(formData.msg, buffer)
+      .then(response => {
+        console.log(response);
+      }).finally(() => {
+        setFormData({ ...formData, ...{ msg: "" } });
+        setIsLoading(false);
+      });
+  }
+
+  /**
+   * 一次性全部返回的请求
+   */
   const requestChatData = () => {
     chatService
       .chat(formData.msg)
@@ -138,6 +173,9 @@ export default function MarkdownRenderer() {
       });
   }
 
+  /**
+   * 带有嵌入文件的请求
+   */
   const requestEmbeddingData = () => {
     chatService
       .embedding({ msg: formData.msg, fileIds: selectedFiles.map(file => file.id) })
@@ -183,6 +221,7 @@ export default function MarkdownRenderer() {
     let timer = typeWriter(text, setWelcomeMsg);
     return () => clearInterval(timer);
   }, []);
+
 
   /**
    * 处理文件上传
