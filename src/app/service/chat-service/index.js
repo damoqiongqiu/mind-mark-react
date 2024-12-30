@@ -20,14 +20,10 @@ export default {
           console.log('与服务器的连接已建立');
         };
         eventSource.onmessage = (event) => {
-          console.log('收到消息:', event.data);
-          //TODO: FIXME 这里的处理逻辑有问题，需要优化
-          const isWord = /^[a-zA-Z]+$/.test(event.data);
-          if (isWord && buffer.length > 0) {
-            buffer.push(' ');
-          }
-          buffer.push(event.data);
-          resolve(event.data);
+          const data = JSON.parse(event.data);
+          console.log("收到消息:", data);
+          buffer.push(data.content);
+          resolve(data.content);
         };
         eventSource.onerror = (error) => {
           console.error('连接发生错误:', error);
