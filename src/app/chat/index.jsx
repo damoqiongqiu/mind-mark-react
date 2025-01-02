@@ -132,28 +132,25 @@ export default function MarkdownRenderer() {
   /**
    * 流式响应
    */
-  const buffer = [];
-  const bufferRef = useRef();
+  const bufferRef = useRef([]);
   useEffect(() => {
-    bufferRef.current = setInterval(() => {
-      console.log("buffer", buffer);
-      if (buffer && buffer.length) {
-        let data = buffer.shift();
-        console.log(data);
+    bufferRef.current = [];
+    const timer = setInterval(() => {
+      console.log("buffer", bufferRef.current);
+      if (bufferRef.current.length) {
+        let data = bufferRef.current.shift();
+        console.log("Processed:", data);
         setMarkdownContent((prev) => prev + data);
       }
     }, 50);
-
     return () => {
-      if (bufferRef.current) {
-        clearInterval(bufferRef.current);
-        console.log("清理定时器");
-      }
+      clearInterval(timer);
+      console.log("清理定时器");
     };
   }, []);
   const requestChatStream = () => {
     chatService
-      .chatStream(formData.msg, buffer)
+      .chatStream(formData.msg, bufferRef.current)
       .then((response) => {
         console.log(response);
       })
@@ -197,34 +194,22 @@ export default function MarkdownRenderer() {
   }
 
   /**
-   * 打字机效果
-   * @param {*} text 
-   * @param {*} setterFn 
-   * @param {*} speed 
-   * @returns 
+   * 欢迎消息
    */
-  const typeWriter = (text, setterFn, speed = 100) => {
-    text = text || "";
+  useEffect(() => {
+    let text = i18n.t("welcomeMsg") || "";
     let index = 0;
     let len = text.length;
     let prev = "";
-
-    const timer = setInterval(() => {
+    let timer = setInterval(() => {
       if (index < len) {
         prev = prev + text[index];
-        setterFn(prev);
+        setWelcomeMsg(prev);
       } else {
         clearInterval(timer);
       }
       index += 1;
-    }, speed);
-
-    return timer;
-  }
-
-  useEffect(() => {
-    let text = i18n.t("welcomeMsg");
-    let timer = typeWriter(text, setWelcomeMsg);
+    }, 100);
     return () => clearInterval(timer);
   }, []);
 
