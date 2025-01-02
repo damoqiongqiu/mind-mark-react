@@ -141,14 +141,19 @@ export default props => {
     return (
       <div className={className}>
         <div className="flex align-items-center">
-          <Paginator
-            pageLinkSize={3}
-            first={first}
-            rows={rows}
-            totalRecords={totalElements}
-            onPageChange={onPageChange}
-            style={{ padding: 0 }}
-          />
+          {
+            totalElements ?
+              <Paginator
+                pageLinkSize={3}
+                first={first}
+                rows={rows}
+                totalRecords={totalElements}
+                onPageChange={onPageChange}
+                style={{ padding: 0 }}
+              />
+              :
+              <></>
+          }
         </div>
       </div>
     );

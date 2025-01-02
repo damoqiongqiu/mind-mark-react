@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Panel } from 'primereact/panel';
-import { MultiSelect } from 'primereact/multiselect';
-import { Menu } from 'primereact/Menu';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { confirmDialog } from 'primereact/confirmdialog';
-import { Paginator } from 'primereact/paginator';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import fileService from "../../service/file-service";
 import { setSelectedFiles } from '../../shared/store';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { Button } from 'primereact/button';
+import { Paginator } from 'primereact/paginator';
 
 import "./index.scss";
 
@@ -52,17 +52,17 @@ export default props => {
   /**
    * 加载文件列表，分页
    */
-  const loadData = () => {
-    fileService.getFileList(page).then(response => {
+  const loadData = (page = 0, rows = 15) => {
+    fileService.getFileList(page, rows).then(response => {
       let data = response.data;
       setTotalElements(data.totalElements);
-
-      data = data?.content || [];
-      setFileList(data);
+      setFileList(data?.content || []);
     });
   };
 
-  useEffect(loadData, [page]);
+  useEffect(() => {
+    loadData(page, rows);
+  }, [page, rows]);
 
   /**
    * 删除文件
@@ -100,40 +100,48 @@ export default props => {
     });
   }
 
+  /**
+   * 格式化文件大小
+   * @param {number} size 
+   * @returns {string}
+   */
+  const formatFileSize = (size) => {
+    if (size < 1024) return size + ' B';
+    let i = Math.floor(Math.log(size) / Math.log(1024));
+    let sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+    return (size / Math.pow(1024, i)).toFixed(2) + ' ' + sizes[i];
+  };
 
-  const configMenu = useRef(null);
-  const items = [
-    {
-      label: 'Refresh',
-      icon: 'pi pi-refresh'
-    },
-    {
-      label: 'Search',
-      icon: 'pi pi-search'
-    },
-    {
-      separator: true
-    },
-    {
-      label: 'Delete',
-      icon: 'pi pi-times'
-    }
-  ];
+  /**
+   * 表格中的文件大小模板
+   * @param {*} rowData 
+   * @returns 
+   */
+  const fileSizeTemplate = (rowData) => {
+    return formatFileSize(rowData.fileSize);
+  };
 
-  const headerTemplate = (options) => {
-    const className = `${options.className} justify-content-space-between`;
-
+  /**
+   * 表格中的操作按钮模板
+   * @param {*} item
+   * @returns
+   */
+  const operationTemplate = (item) => {
     return (
-      <div className={className}>
-        <div className="flex align-items-center gap-2">
-          <span className="font-bold">Select File(s)</span>
-        </div>
-        <div>
-          <Menu model={items} popup ref={configMenu} id="config_menu" />
-          {options.togglerElement}
-        </div>
-      </div>
+      <>
+        <Button icon="pi pi-trash" className="p-button-danger" onClick={() => { delFile(item) }} />
+      </>
     );
+  };
+
+  /**
+   * 表格中的序号模板
+   * @param {*} rowData 
+   * @param {*} column 
+   * @returns 
+   */
+  const indexTemplate = (rowData, column) => {
+    return column.rowIndex + 1;
   };
 
   const footerTemplate = (options) => {
@@ -141,31 +149,44 @@ export default props => {
     return (
       <div className={className}>
         <div className="flex align-items-center">
-          <Paginator
-            pageLinkSize={3}
-            first={first}
-            rows={rows}
-            totalRecords={totalElements}
-            onPageChange={onPageChange}
-            style={{ padding: 0 }}
-          />
+          {
+            totalElements ?
+              <Paginator
+                pageLinkSize={3}
+                first={first}
+                rows={rows}
+                totalRecords={totalElements}
+                onPageChange={onPageChange}
+                style={{ padding: 0 }}
+              />
+              :
+              <></>
+          }
         </div>
       </div>
     );
   };
 
   return (
-    <Panel headerTemplate={headerTemplate} footerTemplate={footerTemplate} toggleable className="custom-panel h-100">
-      <MultiSelect
-        value={selectedFiles}
-        onChange={handleChange}
-        options={fileList}
-        optionLabel="displayName"
-        placeholder="Select Files"
-        maxSelectedLabels={3}
-        inline
-        className="w-full"
-      />
-    </Panel>
+    <DataTable
+      showGridlines
+      stripedRows
+      tableStyle={{ width: "100%" }}
+      value={fileList}
+      // rows={rows}
+      // first={first}
+      // paginator
+      // totalRecords={totalElements}
+      // onPageChange={onPageChange}
+      footer={footerTemplate}
+      scrollable
+      scrollHeight="600px"
+    >
+      <Column header="#" body={indexTemplate}></Column>
+      <Column field="displayName" header="文件名"></Column>
+      <Column field="fileSuffix" header="文件类型"></Column>
+      <Column field="fileSize" header="文件大小" body={fileSizeTemplate}></Column>
+      <Column field="" header={i18n.t('operation')} body={operationTemplate}></Column>
+    </DataTable>
   )
 };
