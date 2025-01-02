@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { confirmDialog } from 'primereact/confirmdialog';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import fileService from "../../service/file-service";
-import { setSelectedFiles } from '../../shared/store';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
@@ -19,15 +18,22 @@ export default props => {
   //导航对象
   const navigate = useNavigate();
 
+  // 支持的文件格式
+  const supportedFormats = [
+    'application/pdf',
+    'text/plain',
+    'text/markdown',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.ms-powerpoint',
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/json'
+  ];
+
   //文件列表
   const [fileList, setFileList] = useState([]);
-
-  //选中的文件
-  const selectedFiles = useSelector((state) => state.selectedFiles.value);
-  const dispatch = useDispatch();
-  const handleChange = (e) => {
-    dispatch(setSelectedFiles(e.value));
-  };
 
   //上传的文件
   const uploadedFile = useSelector((state) => state.uploadedFile.value);
@@ -101,6 +107,58 @@ export default props => {
   }
 
   /**
+    * 处理文件上传
+    * @param {*} event 
+    */
+  const handleFileUpload = (event) => {
+    const selectedFile = event.target.files[0];
+    if (!selectedFile) {
+      mmkToast({
+        severity: 'error',
+        summary: 'Error',
+        detail: "请选择一个文件",
+      });
+      return;
+    }
+
+    if (!supportedFormats.includes(selectedFile.type)) {
+      mmkToast({
+        severity: 'error',
+        summary: 'Error',
+        detail: "不支持的文件格式，请上传 pdf、txt、markdown、doc、docx、ppt、pptx、xls、xlsx 或 json 格式的文件。",
+      });
+      return;
+    }
+
+    showGlobalSpin();
+
+    fileService.uploadFiles([selectedFile]).then(
+      response => {
+        mmkToast({
+          severity: 'success',
+          summary: 'Success',
+          sticky: false,
+          life: 5000,
+          detail: "文件上传成功，服务端正在解析文件内容，速度取决于文件的大小和服务器性能。",
+        });
+        console.log(response);
+      },
+      error => {
+        console.error(error);
+        mmkToast({
+          severity: 'error',
+          summary: 'Error',
+          detail: i18n.t('error'),
+        });
+      }
+    ).finally(() => {
+      console.log("---");
+      hideGlobalSpin();
+      loadData();
+    });
+  };
+
+  /**
    * 格式化文件大小
    * @param {number} size 
    * @returns {string}
@@ -145,10 +203,27 @@ export default props => {
   };
 
   const footerTemplate = (options) => {
-    const className = `${options.className} flex flex-wrap align-items-center justify-content-between gap-3`;
     return (
-      <div className={className}>
-        <div className="flex align-items-center">
+      <div className="d-flex align-items-center justify-content-between gap-3 w-100">
+        <div className="d-flex align-items-center">
+          <label
+            className="btn btn-secondary me-2"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title={i18n.t("upload")}
+          >
+            <i className="fa fa-upload"></i>
+            <span className="d-none text-hover">{i18n.t("upload")}</span>
+            <input
+              id="file-input"
+              type="file"
+              className="d-none"
+              accept=".pdf,.txt,.md,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.json"
+              onChange={handleFileUpload}
+            />
+          </label>
+        </div>
+        <div className="d-flex align-items-center">
           {
             totalElements ?
               <Paginator
@@ -173,11 +248,6 @@ export default props => {
       stripedRows
       tableStyle={{ width: "100%" }}
       value={fileList}
-      // rows={rows}
-      // first={first}
-      // paginator
-      // totalRecords={totalElements}
-      // onPageChange={onPageChange}
       footer={footerTemplate}
       scrollable
       scrollHeight="600px"
