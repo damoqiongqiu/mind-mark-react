@@ -260,6 +260,7 @@ export default function MarkdownRenderer() {
     ).finally(() => {
       console.log("---");
       hideGlobalSpin();
+      event.target.value = null;
     });
   };
 

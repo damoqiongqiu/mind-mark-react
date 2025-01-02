@@ -155,6 +155,7 @@ export default props => {
       console.log("---");
       hideGlobalSpin();
       loadData();
+      event.target.value = null;
     });
   };
 
