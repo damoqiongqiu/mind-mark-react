@@ -1,14 +1,21 @@
 import React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import FileManage from './file-manage';
+import DbManage from './db-manage';
 import "./index.scss";
 
 export default props => {
   return (
-    <div className="row">
-      <div className="col-md-12">
-        Coming soon...
-        <Outlet />
+    <>
+      <div className="row">
+        <div className="col-md-12">
+          <FileManage></FileManage>
+        </div>
       </div>
-    </div>
+      <div className="row">
+        <div className="col-md-12">
+          <DbManage></DbManage>
+        </div>
+      </div>
+    </>
   );
 };

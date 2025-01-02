@@ -1,22 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Tag } from 'primereact/tag';
-import LoadingDot from "../shared/loading-dot";
+import LoadingDot from "../../shared/loading-dot";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
-import ajv from "../service/ajv-validate-service";
+import ajv from "../../service/ajv-validate-service";
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUploadedFile } from '../shared/store';
-import fileService from 'src/app/service/file-service';
-import chatService from "src/app/service/chat-service";
+import { setUploadedFile } from '../../shared/store';
+import fileService from '../../service/file-service';
+import chatService from "../../service/chat-service";
 import * as _ from 'lodash';
-import environment from "src/environments/environment";
 
 import "highlight.js/styles/github-dark.css";
 import "./index.scss";
-
-const chatStreamURL = environment.dataURL.chatStreamURL;
 
 const schema = {
   "type": "object",

@@ -1,6 +1,6 @@
 import React from 'react';
-import FileList from '../file-list';
-import Chat from '../chat';
+import FileList from './file-list';
+import Chat from './chat';
 import "./index.scss";
 
 /**

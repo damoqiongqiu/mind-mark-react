@@ -7,8 +7,8 @@ import { confirmDialog } from 'primereact/confirmdialog';
 import { Paginator } from 'primereact/paginator';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import fileService from "src/app/service/file-service";
-import { setSelectedFiles } from '../shared/store';
+import fileService from "../../service/file-service";
+import { setSelectedFiles } from '../../shared/store';
 
 import "./index.scss";
 
@@ -155,7 +155,12 @@ export default props => {
   };
 
   return (
-    <Panel headerTemplate={headerTemplate} footerTemplate={footerTemplate} toggleable className="custom-panel h-100">
+    <Panel
+      toggleable
+      className="custom-panel h-100"
+      headerTemplate={headerTemplate}
+      footerTemplate={footerTemplate}
+    >
       <MultiSelect
         value={selectedFiles}
         onChange={handleChange}
