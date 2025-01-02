@@ -252,6 +252,7 @@ export default props => {
       footer={footerTemplate}
       scrollable
       scrollHeight="600px"
+      className="custom-scrollbar p-datatable-sm"
     >
       <Column header="#" body={indexTemplate}></Column>
       <Column field="displayName" header="文件名"></Column>
