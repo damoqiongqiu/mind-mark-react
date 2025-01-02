@@ -204,12 +204,13 @@ const FileManager = () => {
     <DataTable
       showGridlines
       stripedRows
-      tableStyle={{ width: "100%" }}
+      tableStyle={{ width: "100%"}}
       value={files}
       footer={footerTemplate}
       scrollable
       scrollHeight="600px"
       className="p-datatable-sm custom-scrollbar"
+      emptyMessage={t('No files found')}
     >
       <Column header="#" body={indexTemplate}></Column>
       <Column field="displayName" header={t("fileName")}></Column>
