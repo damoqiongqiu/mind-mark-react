@@ -1,4 +1,10 @@
 {
+  "selectFile": "请选择一个文件",
+  "unsupportedFormat": "不支持的文件格式。请上传pdf、txt、markdown、doc、docx、ppt、pptx、xls、xlsx或json格式的文件。",
+  "uploadSuccess": "文件上传成功。服务器正在解析文件内容，这取决于文件大小和服务器性能。",
+  "fileName": "文件名",
+  "fileType": "文件类型",
+  "fileSize": "文件大小",
   "home": "首页",
   "chat": "对话",
   "knowledge": "知识库",

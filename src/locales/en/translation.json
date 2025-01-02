@@ -1,4 +1,10 @@
 {
+  "selectFile": "Please select a file",
+  "unsupportedFormat": "Unsupported file format. Please upload a file in pdf, txt, markdown, doc, docx, ppt, pptx, xls, xlsx, or json format.",
+  "uploadSuccess": "File uploaded successfully. The server is parsing the file content, which depends on the file size and server performance.",
+  "fileName": "File Name",
+  "fileType": "File Type",
+  "fileSize": "File Size",
   "home": "Home",
   "chat": "Chat",
   "knowledge": "Knowledge",
