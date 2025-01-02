@@ -1,6 +1,6 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
 import FileList from '../file-list';
+import Chat from '../chat';
 import "./index.scss";
 
 /**
@@ -12,7 +12,7 @@ export default props => {
   return (
     <div className="row h-100">
       <div className="col-md-8 h-100">
-        <Outlet />
+        <Chat />
       </div>
       <div className="col-md-4 h-100">
         <FileList />

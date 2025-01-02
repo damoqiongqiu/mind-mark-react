@@ -9,7 +9,6 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import './index.scss';
 
-//TODO:从服务端加载支持的语言列表
 const languages = [
   { name: '汉语', value: 'zh' },
   { name: 'English', value: 'en' }
@@ -49,13 +48,13 @@ const NavBar = props => {
     {
       label: i18n.t("chat"),
       icon: "fa-home",
-      url: "/home"
+      url: "/chat"
     },
-    // {
-    //   label: i18n.t("knowledge"),
-    //   icon: "fa-cog",
-    //   url: "/knowledge"
-    // }
+    {
+      label: i18n.t("knowledge"),
+      icon: "fa-cog",
+      url: "/knowledge"
+    }
   ];
 
   return (

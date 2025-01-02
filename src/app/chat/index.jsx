@@ -133,29 +133,35 @@ export default function MarkdownRenderer() {
    * 流式响应
    */
   const buffer = [];
-  const bufferTime = setInterval(() => {
-    console.log("buffer", buffer);
-    if (buffer && buffer.length) {
-      let data = buffer.shift();
-      console.log(data);
-      setMarkdownContent(prev => prev + data);
-    }
-  }, 50);
+  const bufferRef = useRef();
   useEffect(() => {
+    bufferRef.current = setInterval(() => {
+      console.log("buffer", buffer);
+      if (buffer && buffer.length) {
+        let data = buffer.shift();
+        console.log(data);
+        setMarkdownContent((prev) => prev + data);
+      }
+    }, 50);
+
     return () => {
-      clearInterval(bufferTime);
+      if (bufferRef.current) {
+        clearInterval(bufferRef.current);
+        console.log("清理定时器");
+      }
     };
   }, []);
   const requestChatStream = () => {
     chatService
       .chatStream(formData.msg, buffer)
-      .then(response => {
+      .then((response) => {
         console.log(response);
-      }).finally(() => {
-        setFormData({ ...formData, ...{ msg: "" } });
+      })
+      .finally(() => {
+        setFormData({ ...formData, msg: "" });
         setIsLoading(false);
       });
-  }
+  };
 
   /**
    * 一次性全部返回的请求

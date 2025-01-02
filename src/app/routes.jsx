@@ -1,37 +1,25 @@
-import React, { lazy, useState } from "react";
-import MainLayout from "./main-layout";
-import Chat from "./chat";
+import React, { lazy } from "react";
+import ChatLayout from "./chat-layout";
 import Exception404 from "./shared/exception/404";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
 
 const Knowledge = lazy(() => import(/*webpackChunkName:'knowledge',webpackPrefetch:true*/ "./knowledge"));
 
 export default props => {
-  const sessionUser = useSelector((state) => state.session.user);
+  // const sessionUser = useSelector((state) => state.session.user);
 
   const routes = [
     {
       path: "/",
       element: Navigate,
-      redirect: "/home/chat",
+      redirect: "/chat",
     },
     {
-      path: "/home",
-      element: MainLayout,
-      children: [
-        {
-          path: "chat",
-          element: Chat,
-        },
-      ]
+      path: "/chat",
+      element: ChatLayout,
     },
     {
-      path: "chat",
-      element: Chat,
-    },
-    {
-      path: "knowledge",
+      path: "/knowledge",
       element: Knowledge,
     },
     {
