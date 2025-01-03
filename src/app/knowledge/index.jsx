@@ -7,11 +7,11 @@ import "./index.scss";
 
 const TABS = [
   {
-    header: <span><i className="fa fa-file me-2"></i>File Manager</span>,
+    header: <span><i className="fa fa-file me-2"></i>File</span>,
     component: FileManage
   },
   {
-    header: <span><i className="fa fa-database me-2"></i>Database Manager</span>,
+    header: <span><i className="fa fa-database me-2"></i>Database</span>,
     component: DbManage
   }
 ];
