@@ -59,7 +59,7 @@ const App = props => {
       <NavBar></NavBar>
 
       {/* 主体内容区域 */}
-      <div className="container main-container">
+      <div className="container main-container h-100">
         <ErrorBoundary>
           <Suspense
             fallback={

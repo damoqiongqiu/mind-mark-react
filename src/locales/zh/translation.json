@@ -185,5 +185,45 @@
     "posts": "作品",
     "users": "用户",
     "noData": "没有找到任何数据。"
-  }
+  },
+  "database": {
+    "type": "数据库类型",
+    "ip": "IP地址",
+    "port": "端口",
+    "charset": "字符集",
+    "username": "用户名",
+    "password": "密码",
+    "selectType": "请选择数据库类型",
+    "schemaName": "数据库名称",
+    "tableName": "表名",
+    "idColumn": "主键列",
+    "connectionSuccess": "连接成功",
+    "connectionFailed": "连接失败",
+    "selectTable": "选择要监控的表",
+    "plsEnterSchemaName": "请输入数据库名称",
+    "plsEnterTableName": "请输入表名",
+    "plsEnterIdColumn": "请输入主键列",
+    "editSchemaTable": "编辑数据库表",
+    "addSchemaTable": "新增数据库表",
+    "connection": {
+      "title": "数据库连接",
+      "add": "新增数据库连接",
+      "edit": "编辑数据库连接",
+      "dbType": "数据库类型",
+      "ip": "IP地址",
+      "port": "端口",
+      "charset": "字符集",
+      "userName": "用户名",
+      "password": "密码",
+      "plsEnterDbType": "请选择数据库类型",
+      "plsEnterIp": "请输入IP地址",
+      "plsEnterPort": "请输入端口号",
+      "plsEnterCharset": "请输入字符集",
+      "plsEnterUserName": "请输入用户名",
+      "plsEnterPassword": "请输入密码"
+    }
+  },
+  "noData": "没有数据",
+  "deleteSuccess": "删除成功",
+  "saveSuccess": "保存成功"
 }

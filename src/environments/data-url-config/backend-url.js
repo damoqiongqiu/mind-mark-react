@@ -12,4 +12,12 @@ export const dataURL = {
   fileUploadURL: "/mind-mark/file/upload",
   fileListURL: "/mind-mark/file/list/<%= page %>",
   delFileURL: "/mind-mark/file/delete/<%= id %>",
+  getDbConfigListURL: "/mind-mark/db/list/<%= userId %>/<%= page %>",
+  getDbConfigDetailURL: "/mind-mark/db/<%= id %>",
+  saveDbConfigURL: "/mind-mark/db/save",
+  deleteDbConfigURL: "/mind-mark/db/delete/<%= id %>",
+  getShemaTableListURL: "/mind-mark/schema-table/list/<%= dbId %>/<%= page %>",
+  getShemaTableDetailURL: "/mind-mark/schema-table/<%= id %>",
+  saveShemaTableURL: "/mind-mark/schema-table/save",
+  deleteShemaTableURL: "/mind-mark/schema-table/delete/<%= id %>",
 };

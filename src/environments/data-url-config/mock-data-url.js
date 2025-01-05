@@ -9,4 +9,12 @@ export const dataURL = {
   fileUploadURL: "",
   fileListURL: "mock-data/file-list.json",
   delFileURL: "",
+  getDbConfigListURL: "",
+  getDbConfigDetailURL: "",
+  saveDbConfigURL: "",
+  deleteDbConfigURL: "",
+  getShemaTableListURL: "",
+  getShemaTableDetailURL: "",
+  saveShemaTableURL: "",
+  deleteShemaTableURL: "",
 };

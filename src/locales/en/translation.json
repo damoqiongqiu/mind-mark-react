@@ -185,5 +185,45 @@
     "posts": "Posts",
     "users": "Users",
     "noData": "No data found."
-  }
+  },
+  "database": {
+    "type": "Database Type",
+    "ip": "IP Address",
+    "port": "Port",
+    "charset": "Charset",
+    "username": "Username",
+    "password": "Password",
+    "selectType": "Select Database Type",
+    "schemaName": "Schema Name",
+    "tableName": "Table Name",
+    "idColumn": "ID Column",
+    "connectionSuccess": "Connection Successful",
+    "connectionFailed": "Connection Failed",
+    "selectTable": "Select Tables to Monitor",
+    "plsEnterSchemaName": "Please enter schema name",
+    "plsEnterTableName": "Please enter table name",
+    "plsEnterIdColumn": "Please enter ID column",
+    "editSchemaTable": "Edit Schema Table",
+    "addSchemaTable": "Add Schema Table",
+    "connection": {
+      "title": "Database Connection",
+      "add": "Add Database Connection",
+      "edit": "Edit Database Connection",
+      "dbType": "Database Type",
+      "ip": "IP Address",
+      "port": "Port",
+      "charset": "Charset",
+      "userName": "Username",
+      "password": "Password",
+      "plsEnterDbType": "Please select database type",
+      "plsEnterIp": "Please enter IP address",
+      "plsEnterPort": "Please enter port",
+      "plsEnterCharset": "Please enter charset",
+      "plsEnterUserName": "Please enter username",
+      "plsEnterPassword": "Please enter password"
+    }
+  },
+  "noData": "No Data",
+  "deleteSuccess": "Delete Successfully",
+  "saveSuccess": "Save Successfully"
 }
