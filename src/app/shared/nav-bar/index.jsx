@@ -47,7 +47,7 @@ const NavBar = props => {
   const menus = [
     {
       label: i18n.t("chat"),
-      icon: "fa-home",
+      icon: "fa-comment-o",
       url: "/chat"
     },
     {
