@@ -118,7 +118,6 @@ export default function MarkdownRenderer() {
     setWelcomeMsg("");
     setMarkdownContent("");
 
-    //TODO:接受流式数据
     if (selectedFiles && selectedFiles.length) {
       requestEmbeddingData();
     } else {
