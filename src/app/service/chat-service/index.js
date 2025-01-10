@@ -7,14 +7,14 @@ const chatURL = environment.dataURL.chatURL;
 const embeddingURL = environment.dataURL.embeddingURL;
 
 export default {
-  chat: async (msg) => {
-    let reqURL = _.template(chatURL)({ msg });
+  chat: async (modelType, msg) => {
+    let reqURL = _.template(chatURL)({ modelType, msg });
     return axiosService.get(reqURL);
   },
-  chatStream: async (msg, buffer) => {
+  chatStream: async (modelType, msg, buffer) => {
     return new Promise((resolve, reject) => {
       try {
-        let reqURL = _.template(chatStreamURL)({ msg });
+        let reqURL = _.template(chatStreamURL)({ modelType, msg });
         const eventSource = new EventSource(reqURL);
         eventSource.onopen = () => {
           console.log('与服务器的连接已建立');
@@ -36,7 +36,8 @@ export default {
       }
     })
   },
-  embedding: async (param) => {
-    return axiosService.post(embeddingURL, param);
+  embedding: async (modelType, param) => {
+    let reqURL = _.template(embeddingURL)({ modelType });
+    return axiosService.post(reqURL, param);
   }
 }

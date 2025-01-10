@@ -11,6 +11,7 @@ import { setUploadedFile } from '../../shared/store';
 import fileService from '../../service/file-service';
 import chatService from "../../service/chat-service";
 import * as _ from 'lodash';
+import { Dropdown } from 'primereact/dropdown';
 
 import "highlight.js/styles/github-dark.css";
 import "./index.scss";
@@ -22,9 +23,13 @@ const schema = {
       "type": "string",
       "minLength": 1,
       "maxLength": 200,
+    },
+    "modelType": {
+      "type": "string",
+      "enum": ["openai", "zhipuai"]
     }
   },
-  "required": ["msg"],
+  "required": ["msg", "modelType"],
 }
 const ajvValidate = ajv.compile(schema);
 
@@ -75,7 +80,13 @@ export default function MarkdownRenderer() {
 
   const [formData, setFormData] = useState({
     msg: "",
+    modelType: "zhipuai"
   });
+
+  const modelOptions = [
+    { label: 'OpenAI', value: 'openai' },
+    { label: 'ZhipuAI', value: 'zhipuai' }
+  ];
 
   const handleInputChange = (key, value) => {
     const temp = {
@@ -146,7 +157,7 @@ export default function MarkdownRenderer() {
   }, []);
   const requestChatStream = () => {
     chatService
-      .chatStream(formData.msg, bufferRef.current)
+      .chatStream(formData.modelType, formData.msg, bufferRef.current)
       .then((response) => {
         console.log(response);
       })
@@ -161,7 +172,7 @@ export default function MarkdownRenderer() {
    */
   const requestChatData = () => {
     chatService
-      .chat(formData.msg)
+      .chat(formData.modelType, formData.msg)
       .then(response => {
         let data = response.data;
         console.log(data);
@@ -177,7 +188,7 @@ export default function MarkdownRenderer() {
    */
   const requestEmbeddingData = () => {
     chatService
-      .embedding({ msg: formData.msg, fileIds: selectedFiles.map(file => file.id) })
+      .embedding(formData.modelType, { msg: formData.msg, fileIds: selectedFiles.map(file => file.id) })
       .then(response => {
         let data = response.data;
         console.log(data);
@@ -311,6 +322,13 @@ export default function MarkdownRenderer() {
                 onChange={handleFileUpload}
               />
             </label>
+            <Dropdown
+              value={formData.modelType}
+              onChange={(e) => handleInputChange('modelType', e.value)}
+              options={modelOptions}
+              className="me-2"
+              style={{ width: '150px' }}
+            />
             <label className='text-warning'>
               {
                 (selectedFiles.length) ?

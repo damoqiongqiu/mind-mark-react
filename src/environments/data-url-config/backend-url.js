@@ -6,9 +6,9 @@
  * 这些配置项会被 environment.* 中的 dataURL 属性引用。所有 *.service.ts 文件中的请求路径都会从 environment.* 中的 dataURL 属性中获取。
  */
 export const dataURL = {
-  chatURL: "/mind-mark/chat?msg=<%= msg %>",                     //直接对话，不预先查询向量数据库
-  chatStreamURL: "/mind-mark/chatStream?msg=<%= msg %>",         //流式对话，直接对话，不预先查询向量数据库
-  embeddingURL: "/mind-mark/embedding",                          //首先查询向量库，然后根据向量库返回的上下文生成答案
+  chatURL: "/mind-mark/chat?modelType=<%= modelType %>&msg=<%= msg %>",                     //直接对话，不预先查询向量数据库
+  chatStreamURL: "/mind-mark/chatStream?modelType=<%= modelType %>&msg=<%= msg %>",         //流式对话，直接对话，不预先查询向量数据库
+  embeddingURL: "/mind-mark/embedding?modelType=<%= modelType %>",                          //首先查询向量库，然后根据向量库返回的上下文生成答案
   fileUploadURL: "/mind-mark/file/upload",
   fileListURL: "/mind-mark/file/list/<%= page %>",
   delFileURL: "/mind-mark/file/delete/<%= id %>",

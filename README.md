@@ -37,9 +37,13 @@ npm start
 
 ## 3.屏幕截图
 
-![MindMark-React Screenshot](./src/assets/images/mmk-1.gif)
+![mmk-1.gif](./src/assets/images/mmk-1.gif)
 
-![MindMark-React Screenshot](./src/assets/images/mind-mark-react.png)
+![mind-mark-react.png](./src/assets/images/mind-mark-react.png)
+
+![11.png](./src/assets/images/11.png)
+
+![12.png](./src/assets/images/12.png)
 
 ## 4.License
 
