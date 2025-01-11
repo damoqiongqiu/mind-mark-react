@@ -26,7 +26,7 @@ const schema = {
     },
     "modelType": {
       "type": "string",
-      "enum": ["openai", "zhipuai"]
+      "enum": ["openai", "zhipuai", "ollama"]
     }
   },
   "required": ["msg", "modelType"],
@@ -85,7 +85,8 @@ export default function MarkdownRenderer() {
 
   const modelOptions = [
     { label: 'OpenAI', value: 'openai' },
-    { label: 'ZhipuAI', value: 'zhipuai' }
+    { label: 'ZhipuAI', value: 'zhipuai' },
+    { label: 'Ollama', value: 'ollama' }
   ];
 
   const handleInputChange = (key, value) => {
@@ -223,7 +224,7 @@ export default function MarkdownRenderer() {
 
   /**
    * 处理文件上传
-   * @param {*} event 
+   * @param {*} event
    */
   const handleFileUpload = (event) => {
     const selectedFile = event.target.files[0];
