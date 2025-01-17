@@ -33,7 +33,8 @@ const schema = {
 }
 const ajvValidate = ajv.compile(schema);
 
-export default function MarkdownRenderer() {
+export default props => {
+
   //i18n hooks
   const { i18n } = useTranslation();
 
