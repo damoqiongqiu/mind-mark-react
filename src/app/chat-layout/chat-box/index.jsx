@@ -1,17 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Tag } from 'primereact/tag';
-import LoadingDot from "../../shared/loading-dot";
+import { NavLink } from 'react-router-dom';
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
-import ajv from "../../service/ajv-validate-service";
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import * as _ from 'lodash';
+import { Tag } from 'primereact/tag';
+import { Dropdown } from 'primereact/dropdown';
+import { Nav } from 'react-bootstrap';
+import LoadingDot from "../../shared/loading-dot";
 import { setUploadedFile } from '../../shared/store';
 import fileService from '../../service/file-service';
 import chatService from "../../service/chat-service";
-import * as _ from 'lodash';
-import { Dropdown } from 'primereact/dropdown';
+import ajv from "../../service/ajv-validate-service";
 
 import "highlight.js/styles/github-dark.css";
 import "./index.scss";
@@ -34,6 +36,9 @@ const schema = {
 const ajvValidate = ajv.compile(schema);
 
 export default props => {
+
+  //sessionUser，从 redux 中获取
+  const sessionUser = useSelector((state) => state.session.user);
 
   //i18n hooks
   const { i18n } = useTranslation();
@@ -153,7 +158,7 @@ export default props => {
     }, 50);
     return () => {
       clearInterval(timer);
-      console.log("清理定时器");
+      console.log(i18n.t('timer.cleanup'));
     };
   }, []);
   const requestChatStream = () => {
@@ -232,7 +237,7 @@ export default props => {
       mmkToast({
         severity: 'error',
         summary: 'Error',
-        detail: "请选择一个文件",
+        detail: i18n.t('fileUpload.selectFile'),
       });
       return;
     }
@@ -241,7 +246,7 @@ export default props => {
       mmkToast({
         severity: 'error',
         summary: 'Error',
-        detail: "不支持的文件格式，请上传 pdf、txt、markdown、doc、docx、ppt、pptx、xls、xlsx 或 json 格式的文件。",
+        detail: i18n.t('fileUpload.unsupportedFormat'),
       });
       return;
     }
@@ -255,7 +260,7 @@ export default props => {
           summary: 'Success',
           sticky: false,
           life: 5000,
-          detail: "文件上传成功，服务端正在解析文件内容，速度取决于文件的大小和服务器性能。",
+          detail: i18n.t('fileUpload.uploadSuccess'),
         });
         console.log(response);
         handleFileUploadSuccess(selectedFile);
@@ -296,75 +301,92 @@ export default props => {
               </div>
             )}
       </div>
-      <div className="input-area mt-2">
-        <form onSubmit={onSubmit}>
-          <textarea
-            rows="5"
-            name="msg"
-            className={`form-control ${errors.msg ? "has-error" : ""}`}
-            value={formData.msg}
-            onChange={(e) => handleInputChange('msg', e.target.value)}
-            placeholder={i18n.t("pleaseInputSomeContent")}
-          />
-          <div className="pt-2 ps-2 pe-2 pb-2">
-            <label
-              className="btn btn-secondary me-2"
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              title={i18n.t("upload")}
-            >
-              <i className="fa fa-upload"></i>
-              <span className="d-none text-hover">{i18n.t("upload")}</span>
-              <input
-                id="file-input"
-                type="file"
-                className="d-none"
-                accept=".pdf,.txt,.md,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.json"
-                onChange={handleFileUpload}
+      {
+        sessionUser ?
+          <div className="input-area mt-2">
+            <form onSubmit={onSubmit}>
+              <textarea
+                rows="5"
+                name="msg"
+                className={`form-control ${errors.msg ? "has-error" : ""}`}
+                value={formData.msg}
+                onChange={(e) => handleInputChange('msg', e.target.value)}
+                placeholder={i18n.t("pleaseInputSomeContent")}
               />
-            </label>
-            <Dropdown
-              value={formData.modelType}
-              onChange={(e) => handleInputChange('modelType', e.value)}
-              options={modelOptions}
-              className="me-2"
-              style={{ width: '150px' }}
-            />
-            <label className='text-warning'>
-              {
-                (selectedFiles.length) ?
-                  <Tag severity="warning">
-                    <div className="flex align-items-center gap-3">
-                      <span className="text-base">选中了 {selectedFiles.length} 个文件。</span>
-                    </div>
-                  </Tag>
-                  :
-                  i18n.t("knowledgeMsg")
-              }
-            </label>
-            <button
-              type="submit"
-              className="btn btn-secondary pull-right"
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              title={i18n.t("send")}
-              onClick={onSubmit}
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <>
-                  <i className="fa fa-spinner fa-spin"></i>
-                </>
-              ) : (
-                <>
-                  <i className="fa fa-paper-plane"></i>
-                  <span className="d-none text-hover">{i18n.t("send")}</span>
-                </>
-              )}
-            </button>
+              <div className="pt-2 ps-2 pe-2 pb-2">
+                <label
+                  className="btn btn-secondary me-2"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title={i18n.t("upload")}
+                >
+                  <i className="fa fa-upload"></i>
+                  <span className="d-none text-hover">{i18n.t("upload")}</span>
+                  <input
+                    id="file-input"
+                    type="file"
+                    className="d-none"
+                    accept=".pdf,.txt,.md,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.json"
+                    onChange={handleFileUpload}
+                  />
+                </label>
+                <Dropdown
+                  value={formData.modelType}
+                  onChange={(e) => handleInputChange('modelType', e.value)}
+                  options={modelOptions}
+                  className="me-2"
+                  style={{ width: '150px' }}
+                />
+                <label className='text-warning'>
+                  {
+                    (selectedFiles.length) ?
+                      <Tag severity="warning">
+                        <div className="flex align-items-center gap-3">
+                          <span className="text-base">
+                            {i18n.t('fileUpload.selectedFiles', { count: selectedFiles.length })}
+                          </span>
+                        </div>
+                      </Tag>
+                      :
+                      i18n.t("knowledgeMsg")
+                  }
+                </label>
+                <button
+                  type="submit"
+                  className="btn btn-secondary pull-right"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title={i18n.t("send")}
+                  onClick={onSubmit}
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <i className="fa fa-spinner fa-spin"></i>
+                    </>
+                  ) : (
+                    <>
+                      <i className="fa fa-paper-plane"></i>
+                      <span className="d-none text-hover">{i18n.t("send")}</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
+          :
+          <div className="p-3 text-center bottom-login-btn" >
+            <Nav.Link
+              as={NavLink}
+              to="/sign-in"
+              className="btn btn-secondary"
+              style={{ width: 'fit-content', margin: '0 auto' }}
+            >
+              <i className="fa fa-sign-in me-2" />
+              {i18n.t("signIn")}
+            </Nav.Link>
+          </div>
+      }
     </div>
   );
 }

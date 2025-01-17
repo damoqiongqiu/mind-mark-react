@@ -59,6 +59,7 @@
   "follow": "Follow",
   "followed": "Followed",
   "editProfile": "Edit Profile",
+  "signIn": "Sign In",
   "gender": {
     "female": "Female",
     "male": "Male",
@@ -155,7 +156,9 @@
       "plsEnterMobile": "Please enter mobile.",
       "plsEnterPassword": "Please enter password.",
       "plsEnterConfirmPassword": "Please enter repeat password.",
-      "plsEnterRemark": "Please enter remark."
+      "plsEnterRemark": "Please enter remark.",
+      "plsEnterUserName": "Please enter user name.",
+      "plsEnterNickName": "Please enter nick name."
     }
   },
   "validation": {
@@ -225,5 +228,15 @@
   },
   "noData": "No Data",
   "deleteSuccess": "Delete Successfully",
-  "saveSuccess": "Save Successfully"
+  "saveSuccess": "Save Successfully",
+  "fileUpload": {
+    "selectFile": "Please select a file",
+    "unsupportedFormat": "Unsupported file format. Please upload a file in pdf, txt, markdown, doc, docx, ppt, pptx, xls, xlsx, or json format.",
+    "uploadSuccess": "File uploaded successfully. The server is parsing the file content, which depends on the file size and server performance.",
+    "selectedFiles": "{{count}} files selected."
+  },
+  "timer": {
+    "cleanup": "Cleanup timer"
+  },
+  "refreshCaptcha": "Click the captcha image to refresh"
 }

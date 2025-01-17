@@ -59,6 +59,7 @@
   "follow": "关注",
   "followed": "已关注",
   "editProfile": "编辑资料",
+  "signIn": "登录",
   "gender": {
     "female": "女",
     "male": "男",
@@ -155,7 +156,9 @@
       "plsEnterMobile": "请输入手机号。",
       "plsEnterPassword": "请输入密码。",
       "plsEnterConfirmPassword": "请再次输入密码。",
-      "plsEnterRemark": "请输入简介。"
+      "plsEnterRemark": "请输入简介。",
+      "plsEnterUserName": "请输入用户名。",
+      "plsEnterNickName": "请输入昵称。"
     }
   },
   "validation": {
@@ -225,5 +228,15 @@
   },
   "noData": "没有数据",
   "deleteSuccess": "删除成功",
-  "saveSuccess": "保存成功"
+  "saveSuccess": "保存成功",
+  "fileUpload": {
+    "selectFile": "请选择一个文件",
+    "unsupportedFormat": "不支持的文件格式，请上传 pdf、txt、markdown、doc、docx、ppt、pptx、xls、xlsx 或 json 格式的文件。",
+    "uploadSuccess": "文件上传成功，服务端正在解析文件内容，速度取决于文件的大小和服务器性能。",
+    "selectedFiles": "选中了 {{count}} 个文件。"
+  },
+  "timer": {
+    "cleanup": "清理定时器"
+  },
+  "refreshCaptcha": "点击验证码图片可以刷新"
 }

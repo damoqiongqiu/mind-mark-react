@@ -1,0 +1,32 @@
+.user-home-container {
+    .tab-content {
+        .post-list-container {
+            .my-masonry-grid {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                margin-left: -30px;
+                width: auto;
+            }
+
+            .my-masonry-grid_column {
+                padding-left: 30px;
+                background-clip: padding-box;
+
+                >section {
+                    background: #000;
+                    margin-bottom: 15px;
+                }
+            }
+        }
+
+        .search-box {
+            width: 250px;
+            color: #fff;
+            border: 1px solid #777;
+            padding: 0 5px;
+            margin: 0;
+            line-height: 25px;
+        }
+    }
+}

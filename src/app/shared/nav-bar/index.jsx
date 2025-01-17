@@ -7,6 +7,8 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import signService from '../../service/sign-in-service';
+import { signOut } from '../../shared/session';
 import './index.scss';
 
 const languages = [
@@ -44,6 +46,19 @@ const NavBar = props => {
     }
   );
 
+  /**
+   * 退出登录
+   */
+  const doSignOut = () => {
+    console.log("退出登录");
+    signService.signOut().then(response => {
+      dispatch(signOut());
+      navigate('/chat');
+    }, error => {
+      console.error(error);
+    });
+  }
+
   const menus = [
     {
       label: i18n.t("chat"),
@@ -60,7 +75,7 @@ const NavBar = props => {
   return (
     <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary main-nav" fixed="top">
       <Container fluid="md">
-        <Navbar.Brand href="/home">
+        <Navbar.Brand href="/chat">
           <Tag severity="danger" value="M" className='brand-logo'></Tag>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -103,6 +118,34 @@ const NavBar = props => {
             <Nav.Link href="https://gitee.com/mumu-osc/mind-mark-react" target="_blank">
               <i className="fa fa-github"></i>
             </Nav.Link>
+            {
+              sessionUser ?
+                <>
+                  <Nav.Link
+                    as={NavLink}
+                    to="/manage/chart"
+                  >
+                    <i className="fa fa-cog" />
+                  </Nav.Link>
+                  <Nav.Link href="#" onClick={doSignOut}>
+                    <i className="fa fa-sign-out"></i>
+                  </Nav.Link>
+                </>
+                :
+                <>
+                  <Nav.Link
+                    as={NavLink}
+                    to="/sign-in"
+                  >
+                    <i className="fa fa-sign-in" />
+                  </Nav.Link>
+                  <Nav.Link
+                    as={NavLink}
+                    to="/sign-up">
+                    <i className="fa fa-user-plus" />
+                  </Nav.Link>
+                </>
+            }
           </Nav>
         </Navbar.Collapse>
       </Container>
