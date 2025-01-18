@@ -1,4 +1,16 @@
-# MindMark-React
+<p align="center">
+    <img width="150" src="./src/assets/images/mmk.png">
+</p>
+
+<h1 align="center">MindMark-React</h1>
+
+<p align="left">
+🚀🚀🚀MindMark（心印）是一款基于 SpringAI 和 AIGC 的问答系统， 采用 RAG 架构，可以和基于 Spring 体系的业务系统进行无缝集成。
+</p>
+
+<p>
+🚀🚀🚀请不要吝惜你的⭐️ Star ⭐️，星星越多，动力越足。🚀🚀🚀
+</p>
 
 ## 1.说明
 
