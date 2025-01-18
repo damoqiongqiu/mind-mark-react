@@ -7,7 +7,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import signService from '../../service/sign-in-service';
+import userService from '../../service/user-service';
 import { signOut } from '../../shared/session';
 import './index.scss';
 
@@ -51,7 +51,7 @@ const NavBar = props => {
    */
   const doSignOut = () => {
     console.log("退出登录");
-    signService.signOut().then(response => {
+    userService.signOut().then(response => {
       dispatch(signOut());
       navigate('/chat');
     }, error => {

@@ -5,9 +5,10 @@ import Card from 'react-bootstrap/Card';
 import { useTranslation } from 'react-i18next';
 import { signIn } from 'src/app/shared/session/';
 import environment from "src/environments/environment";
-import signService from 'src/app/service/sign-in-service';
+import userService from '../../service/user-service';
 import Captcha from '../../shared/captcha';
 import ajv from "../../service/ajv-validate-service";
+import CryptoJS from 'crypto-js';
 
 import './index.scss';
 
@@ -19,7 +20,7 @@ const schema = {
       "type": "string",
       "format": 'email',
     },
-    "password": {
+    "pwd": {
       "type": "string",
       "minLength": 8,
       "maxLength": 16,
@@ -33,7 +34,7 @@ const schema = {
       "type": "boolean"
     }
   },
-  "required": ["userName", "password", "captcha"]
+  "required": ["userName", "pwd", "captcha"]
 }
 //ajv 的 compile 吃资源较多，这里放在组件外面，保证只执行一次。
 const ajvValidate = ajv.compile(schema);
@@ -58,7 +59,7 @@ export default props => {
   //userInfo Entity
   const [userInfo, setUserInfo] = useState({
     userName: "",
-    password: "",
+    pwd: "",
     captcha: "",
     rememberMe: true,
   });
@@ -109,7 +110,8 @@ export default props => {
       return;
     }
 
-    signService.signIn(userInfo).then(
+    userInfo.password = CryptoJS.MD5(userInfo.pwd).toString();
+    userService.signIn(userInfo).then(
       response => {
         window.hideGlobalSpin();
         const data = response.data;
@@ -173,17 +175,17 @@ export default props => {
               <label className="col-md-2 col-form-label">{i18n.t("password")}：</label>
               <div className="col-md-10">
                 <input
-                  className={`form-control ${errors.password ? "is-invalid" : ""}`}
+                  className={`form-control ${errors.pwd ? "is-invalid" : ""}`}
                   required
                   minLength="8"
                   maxLength="32"
-                  name="password"
-                  type="password"
-                  value={userInfo.password}
-                  onChange={(e) => handleInputChange('password', e.target.value)}
+                  name="pwd"
+                  type="pwd"
+                  value={userInfo.pwd}
+                  onChange={(e) => handleInputChange('pwd', e.target.value)}
                 />
                 {
-                  errors.password ? <div className="text-danger">{errors.password}</div> : <></>
+                  errors.pwd ? <div className="text-danger">{errors.pwd}</div> : <></>
                 }
               </div>
             </div>

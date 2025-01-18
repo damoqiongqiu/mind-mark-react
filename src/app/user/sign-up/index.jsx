@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import Card from 'react-bootstrap/Card';
 import userService from 'src/app/service/user-service';
 import ajv from "src/app/service/ajv-validate-service";
+import CryptoJS from 'crypto-js';
+
 import './index.scss';
 
 // 表单输入项数据规格定义
@@ -14,21 +16,21 @@ const schema = {
       "type": "string",
       "format": 'email',
     },
-    "password": {
+    "pwd": {
       "type": "string",
       "minLength": 8,
       "maxLength": 16,
     },
     "confirmPassword": {
       "const": {
-        "$data": "1/password"
+        "$data": "1/pwd"
       },
       "type": "string",
       "minLength": 8,
       "maxLength": 16,
     },
   },
-  "required": ["email", "password", "confirmPassword"],
+  "required": ["email", "pwd", "confirmPassword"],
 }
 //ajv 的 compile 吃资源较多，这里放在组件外面，保证只执行一次。
 const ajvValidate = ajv.compile(schema);
@@ -51,7 +53,7 @@ export default props => {
     gender: 0,
     email: "",
     cellphone: "",
-    password: "",
+    pwd: "",
     confirmPassword: "",
     status: "",
     remark: "",
@@ -98,7 +100,8 @@ export default props => {
     }
 
     userInfo.userName = userInfo.email;
-    userService.newUser(userInfo).then(
+    userInfo.password = CryptoJS.MD5(userInfo.pwd).toString();
+    userService.signUp(userInfo).then(
       response => {
         let data = response.data;
         if (data.success) {
@@ -153,16 +156,16 @@ export default props => {
               <label className="col-md-2 col-form-label">{i18n.t("password")}：</label>
               <div className="col-md-10">
                 <input
-                  className={`form-control ${errors.password ? "is-invalid" : ""}`}
+                  className={`form-control ${errors.pwd ? "is-invalid" : ""}`}
                   required
-                  name="password"
-                  value={userInfo.password}
+                  name="pwd"
+                  value={userInfo.pwd}
                   autoComplete="off"
                   type="text"
-                  onChange={(e) => handleInputChange('password', e.target.value)}
+                  onChange={(e) => handleInputChange('pwd', e.target.value)}
                 />
                 {
-                  errors.password ? <div className="text-danger">{errors.password}</div> : <></>
+                  errors.pwd ? <div className="text-danger">{errors.pwd}</div> : <></>
                 }
               </div>
             </div>
