@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card';
 import userService from '../../../service/user-service';
 import defaultAvatar from '../../../../assets/images/react.svg';
 import ajv from "../../../service/ajv-validate-service";
+import CryptoJS from 'crypto-js';
 
 import './index.scss';
 
@@ -52,15 +53,15 @@ const schema = {
         { "type": "string", "minLength": 0 } // 允许空字符串
       ]
     },
-    "password": {
+    "pwd": {
       "type": "string",
       "minLength": 8,
       "maxLength": 16,
       "errorMessage": "密码长度在 8 到 16 个字符之间。"
     },
-    "confirmPassword": {
+    "confirmPwd": {
       "const": {
-        "$data": "1/password"
+        "$data": "1/pwd"
       },
       "type": "string",
       "minLength": 8,
@@ -80,7 +81,7 @@ const schema = {
       ]
     },
   },
-  "required": ["userName", "password", "confirmPassword"],
+  "required": ["userName", "pwd", "confirmPwd"],
 }
 //ajv 的 compile 吃资源较多，这里放在组件外面，保证只执行一次。
 const ajvValidate = ajv.compile(schema);
@@ -122,8 +123,8 @@ export default props => {
     gender: 0,
     email: "",
     cellphone: "",
-    password: "",
-    confirmPassword: "",
+    pwd: "",
+    confirmPwd: "",
     status: "",
     remark: "",
   });
@@ -161,8 +162,10 @@ export default props => {
     }
 
     if (userId !== "-1") {
-      delete formValue.confirmPassword;
+      delete formValue.confirmPwd;
       delete formValue.salt;
+
+      formValue.password = CryptoJS.MD5(formValue.pwd).toString();
       userService.updateUser(formValue).then(
         response => {
           let data = response.data;
@@ -229,8 +232,8 @@ export default props => {
           let data = response.data.data;
           setFormValue({
             ...data,
-            password: "",
-            confirmPassword: "",
+            pwd: "",
+            confirmPwd: "",
           });
         },
         error => {
@@ -355,15 +358,15 @@ export default props => {
               <label className="col-md-3 col-form-label">{i18n.t("user.password")}：</label>
               <div className="col-md-9">
                 <input
-                  className={`form-control ${errors.password ? "has-error" : ""}`}
-                  type="password"
-                  value={formValue.password}
+                  className={`form-control ${errors.pwd ? "has-error" : ""}`}
+                  type="pwd"
+                  value={formValue.pwd}
                   autoComplete="off"
                   placeholder={i18n.t("user.edit.plsEnterPassword")}
-                  onChange={(e) => handleInputChange('password', e.target.value)}
+                  onChange={(e) => handleInputChange('pwd', e.target.value)}
                 />
                 {
-                  errors.password ? <div className="text-danger">{errors.password}</div> : <></>
+                  errors.pwd ? <div className="text-danger">{errors.pwd}</div> : <></>
                 }
               </div>
             </div>
@@ -371,15 +374,15 @@ export default props => {
               <label className="col-md-3 col-form-label">{i18n.t("user.confirmPassword")}：</label>
               <div className="col-md-9">
                 <input
-                  className={`form-control  ${errors.confirmPassword ? "has-error" : ""}`}
-                  type="password"
-                  value={formValue.confirmPassword}
+                  className={`form-control  ${errors.confirmPwd ? "has-error" : ""}`}
+                  type="pwd"
+                  value={formValue.confirmPwd}
                   autoComplete="off"
                   placeholder={i18n.t("user.edit.plsEnterConfirmPassword")}
-                  onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                  onChange={(e) => handleInputChange('confirmPwd', e.target.value)}
                 />
                 {
-                  errors.confirmPassword ? <div className="text-danger">{errors.confirmPassword}</div> : <></>
+                  errors.confirmPwd ? <div className="text-danger">{errors.confirmPwd}</div> : <></>
                 }
               </div>
             </div>
