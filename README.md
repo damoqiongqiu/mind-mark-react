@@ -12,6 +12,8 @@
 🚀🚀🚀请不要吝惜你的⭐️ Star ⭐️，星星越多，动力越足。🚀🚀🚀
 </p>
 
+<p>线上演示地址：<a href="https://mindmark.qhdsx.com/">https://mindmark.qhdsx.com/</a></p>
+
 ## 1.说明
 
 此项目是 MindMark（心印）的前端代码。
