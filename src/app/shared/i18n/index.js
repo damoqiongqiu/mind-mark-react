@@ -12,7 +12,7 @@ const port = window.location.port;
 //开发态默认指向根目录，构建指向 /MindMark-React/ ，请根据项目情况修改这里的值。
 const baseUrl = !environment.production
   ? '/'
-  : `${protocol}//${hostname}${port ? ':' + port : ''}/MindMark-React/`;
+  : `${protocol}//${hostname}${port ? ':' + port : ''}/`;
 
 // 构建加载路径
 const baseLoadPath = `${baseUrl}locales/{{lng}}/translation.json`;
