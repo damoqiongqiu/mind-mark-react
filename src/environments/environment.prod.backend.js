@@ -7,4 +7,7 @@ const environment = {
     dataURL: dataURL
 };
 
+const backendUrl = process.env.BACKEND_URL;
+// 使用 backendUrl 进行 API 请求
+
 export default environment;

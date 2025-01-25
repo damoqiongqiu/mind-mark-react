@@ -4,6 +4,7 @@ const { merge } = require("webpack-merge");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const HtmlMinimizerPlugin = require("html-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const webpack = require('webpack');
 
 module.exports = merge(commonConfig, {
     optimization: {
@@ -27,24 +28,13 @@ module.exports = merge(commonConfig, {
             }),
         ],
     },
-    devServer: {
-        static: path.resolve("./docs/"),//为了配合 github pages，这里的路径使用 docs ，不使用默认的 public
-        historyApiFallback: true,
-        compress: true,
-        allowedHosts: 'all',
-        open: true,
-        port: 8091,
-        proxy: {
-          "/mind-mark": {
-            "target": "https://api.mindmark.qhdsx.com/",
-            "secure": false,
-            "changeOrigin": true,
-            "logLevel": "debug"
-          }
-        },
-    },
     cache: {
         type: "filesystem",
         cacheDirectory: path.resolve(__dirname, "../node_modules/.cache/webpack"),
     },
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env.BACKEND_URL': JSON.stringify('https://api.mindmark.qhdsx.com/')
+        })
+    ],
 });

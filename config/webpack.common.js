@@ -12,7 +12,7 @@ const { NODE_ENV, ANALYZE, UNUSED, SMP, DATA_SOURCE } = process.env;
 const isDev = (NODE_ENV === "development");
 
 //开发态默认指向根目录，构建指向 /MindMark-React/ ，请根据项目情况修改这里的值。
-const baseUrl = isDev ? '/' : '/MindMark-React/';
+const baseUrl = isDev ? '/' : '/';
 
 const isAnalyzerMode = (ANALYZE === "1");
 const isUnusedMode = (UNUSED === "1");
