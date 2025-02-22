@@ -14,7 +14,12 @@ import 'src/index.scss';
 //导入根组件。
 import App from 'src/app/';
 
-const basename = !environment.production ? '/' : '/MindMark-React/';
+const basename = !environment.production ? '/' : '/';
+
+console.log("================");
+console.log(basename);
+console.log("================");
+
 const root = createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
