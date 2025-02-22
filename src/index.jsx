@@ -13,12 +13,9 @@ import 'src/index.scss';
 
 //导入根组件。
 import App from 'src/app/';
-
-const basename = !environment.production ? '/' : '/';
-
-console.log("================");
-console.log(basename);
-console.log("================");
+// 这里修改成你自己的应用名称 不是dev环境部署到线上的时候使用
+const yourApp =  '/';
+const basename = !environment.production ? '/' : yourApp;
 
 const root = createRoot(document.getElementById('root'));
 root.render(

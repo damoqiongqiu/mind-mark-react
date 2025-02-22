@@ -18,7 +18,7 @@ module.exports = merge(commonConfig, {
     port: 8091,
     proxy: {
       "/mind-mark": {
-        "target": "http://172.16.0.11:9888",
+        "target": "http://localhost:9090", //修改这里，指向你的 MindMark 服务端接口
         "secure": false,
         "changeOrigin": true,
         "logLevel": "debug"
