@@ -90,9 +90,8 @@ export default props => {
   });
 
   const modelOptions = [
-    { label: 'OpenAI', value: 'openai' },
-    { label: 'ZhipuAI', value: 'zhipuai' },
-    { label: 'Ollama', value: 'ollama' }
+    { label: '魔力方舟', value: 'openai' },
+    { label: 'ZhipuAI', value: 'zhipuai' }
   ];
 
   const handleInputChange = (key, value) => {

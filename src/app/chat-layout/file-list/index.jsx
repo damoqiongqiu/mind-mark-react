@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Panel } from 'primereact/panel';
 import { MultiSelect } from 'primereact/multiselect';
-import { Menu } from 'primereact/Menu';
+import { Menu } from 'primereact/menu';
 import { useTranslation } from 'react-i18next';
 import { confirmDialog } from 'primereact/confirmdialog';
 import { Paginator } from 'primereact/paginator';
