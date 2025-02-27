@@ -86,11 +86,11 @@ export default props => {
 
   const [formData, setFormData] = useState({
     msg: "",
-    modelType: "zhipuai"
+    modelType: "openai"
   });
 
   const modelOptions = [
-    { label: '魔力方舟', value: 'openai' },
+    { label: '模力方舟', value: 'openai' },
     { label: 'ZhipuAI', value: 'zhipuai' }
   ];
 
