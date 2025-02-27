@@ -91,7 +91,7 @@ export default props => {
 
   const modelOptions = [
     { label: '模力方舟', value: 'openai' },
-    { label: 'Deepseek-r1', value: 'ollama' },
+    // { label: 'Deepseek-r1', value: 'ollama' },
     { label: 'ZhipuAI', value: 'zhipuai' }
   ];
 
