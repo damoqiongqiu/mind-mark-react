@@ -58,8 +58,8 @@ export default props => {
 
   //userInfo Entity
   const [userInfo, setUserInfo] = useState({
-    userName: "",
-    pwd: "",
+    userName: "mind-mark@qq.com",
+    pwd: "mind-mark",
     captcha: "",
     rememberMe: true,
   });
@@ -180,7 +180,7 @@ export default props => {
                   minLength="8"
                   maxLength="32"
                   name="pwd"
-                  type="pwd"
+                  type="password"
                   value={userInfo.pwd}
                   onChange={(e) => handleInputChange('pwd', e.target.value)}
                 />
