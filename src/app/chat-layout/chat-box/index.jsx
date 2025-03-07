@@ -313,6 +313,11 @@ export default props => {
                 value={formData.msg}
                 onChange={(e) => handleInputChange('msg', e.target.value)}
                 placeholder={i18n.t("pleaseInputSomeContent")}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" && !event.shiftKey) {
+                    onSubmit(event);
+                  }
+                }}
               />
               <div className="pt-2 ps-2 pe-2 pb-2">
                 <label
